@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import api from "./services/Api";
 import "./App.css";
 
 import logo from "./assets/logo.svg";
 
-function App() {
+const App = () => {
+  const [email, setEmail] = useState("");
+  const [token, setToken] = useState();
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    try {
+      const response = await api.post("/sessions", { email });
+      setToken(response.data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   return (
     <div className="container">
       <img src={logo} alt="AirCnC" />
@@ -13,9 +27,14 @@ function App() {
           <strong>talentos</strong> para sua empresa.
         </p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="email">Email*</label>
-          <input type="email" name="email" placeholder="Seu email" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Seu email"
+            onChange={event => setEmail(event.target.value)}
+          />
           <button className="btn" type="submit">
             Entrar
           </button>
@@ -23,6 +42,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
