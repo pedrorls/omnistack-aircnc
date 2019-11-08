@@ -6,13 +6,12 @@ import logo from "./assets/logo.svg";
 
 const App = () => {
   const [email, setEmail] = useState("");
-  const [token, setToken] = useState();
 
   const handleSubmit = async event => {
     event.preventDefault();
     try {
       const response = await api.post("/sessions", { email });
-      setToken(response.data);
+      localStorage.setItem({ user: response.data });
     } catch (error) {
       throw new Error(error);
     }
