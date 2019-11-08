@@ -11,7 +11,7 @@ const App = () => {
     event.preventDefault();
     try {
       const response = await api.post("/sessions", { email });
-      localStorage.setItem({ user: response.data });
+      localStorage.setItem("user", response.data._id);
     } catch (error) {
       throw new Error(error);
     }
