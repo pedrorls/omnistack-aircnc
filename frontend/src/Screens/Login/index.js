@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import api from "../../services/Api";
 
-export const Login = props => {
+export const Login = ({ history }) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = async event => {
@@ -10,6 +10,7 @@ export const Login = props => {
     try {
       const response = await api.post("/sessions", { email });
       localStorage.setItem("user", response.data._id);
+      history.push("/dashboard");
     } catch (error) {
       throw new Error(error);
     }
